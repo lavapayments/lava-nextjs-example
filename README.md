@@ -35,6 +35,7 @@ Edit the `.env` file to include your Lava API keys:
 
 ```
 LAVA_SECRET_KEY="your_lava_secret_key"
+LAVA_ORIGIN_URL="your_application_url" # The origin URL of your application (e.g., http://localhost:3000 for development or https://yourdomain.com for production)
 LAVA_PRODUCT_SECRET="your_lava_product_secret"
 ```
 
