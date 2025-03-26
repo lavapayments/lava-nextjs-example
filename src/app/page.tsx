@@ -103,52 +103,111 @@ export default function HomePage() {
     loading || (chat.status !== "ready" && chat.status !== "error");
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] p-4 text-white">
-      <div className="container flex max-w-4xl flex-col items-center gap-8 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Lava <span className="text-[hsl(280,100%,70%)]">Payments</span> Demo
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-purple-900 to-indigo-950 p-6 text-white">
+      <div className="container flex max-w-4xl flex-col items-center gap-10 px-4 py-12">
+        <h1 className="text-center text-4xl font-extrabold tracking-tight text-white sm:text-6xl">
+          Lava{" "}
+          <span className="bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
+            Payments
+          </span>{" "}
+          Demo
         </h1>
 
-        <Card className="w-full max-w-xl bg-white/10 p-6">
-          <h2 className="mb-4 text-2xl font-bold">Connect Your Wallet</h2>
+        <Card className="w-full max-w-xl border border-purple-300/20 bg-white/10 p-8 shadow-lg backdrop-blur-sm">
+          <h2 className="mb-6 text-2xl font-bold text-purple-100">
+            Connect Your Wallet
+          </h2>
 
           {connectionId ? (
-            <div className="space-y-4">
-              <p className="text-green-400">✅ Wallet Connected</p>
-              <p>Connection ID: {connectionId.substring(0, 12)}...</p>
+            <div className="space-y-5">
+              <div className="rounded-md bg-green-900/30 p-3">
+                <p className="flex items-center text-green-300">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="mr-2 h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  Wallet Connected
+                </p>
+              </div>
 
-              {connectionInfo?.balance !== undefined && (
-                <p>Balance: ${connectionInfo.balance.toFixed(2)}</p>
-              )}
+              <div className="rounded-md bg-purple-900/30 p-4">
+                <p className="text-sm text-purple-200">
+                  Connection ID:{" "}
+                  <span className="font-mono">
+                    {connectionId.substring(0, 12)}...
+                  </span>
+                </p>
 
-              <Button onClick={handleTopUp} disabled={loading}>
-                {loading ? "Loading..." : "Add Funds"}
+                {connectionInfo?.balance !== undefined && (
+                  <p className="mt-2 text-xl font-bold text-white">
+                    Balance: ${connectionInfo.balance.toFixed(2)}
+                  </p>
+                )}
+              </div>
+
+              <Button
+                onClick={handleTopUp}
+                disabled={loading}
+                className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 py-6 font-medium transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {loading ? "Processing..." : "Add Funds"}
               </Button>
             </div>
           ) : (
             <Button
               onClick={handleConnectWallet}
               disabled={loading}
-              className="w-full"
+              className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 py-6 font-medium transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {loading ? "Loading..." : "Connect Wallet"}
+              {loading ? "Processing..." : "Connect Wallet"}
             </Button>
           )}
         </Card>
 
         {!!connectionId && (
-          <Card className="w-full max-w-xl bg-white/10 p-6">
-            <h2 className="mb-4 text-2xl font-bold">AI Chat Demo</h2>
-            {chat.messages.map((message) => (
-              <div key={message.id}>
-                {message.role === "user" ? "User: " : "AI: "}
-                {message.content}
-              </div>
-            ))}
+          <Card className="w-full max-w-xl border border-purple-300/20 bg-white/10 p-8 shadow-lg backdrop-blur-sm">
+            <h2 className="mb-6 text-2xl font-bold text-purple-100">
+              AI Chat Demo
+            </h2>
+
+            <div className="mb-6 max-h-80 space-y-4 overflow-y-auto rounded-md bg-indigo-950/50 p-4">
+              {chat.messages.length > 0 ? (
+                chat.messages.map((message) => (
+                  <div
+                    key={message.id}
+                    className={`rounded-lg p-3 ${
+                      message.role === "user"
+                        ? "bg-purple-800/40 text-purple-100"
+                        : "bg-indigo-800/40 text-indigo-100"
+                    }`}
+                  >
+                    <span className="block text-xs font-semibold uppercase text-purple-300">
+                      {message.role === "user" ? "You" : "AI"}
+                    </span>
+                    <span>{message.content}</span>
+                  </div>
+                ))
+              ) : (
+                <div className="py-8 text-center text-purple-300 opacity-70">
+                  Your conversation will appear here
+                </div>
+              )}
+            </div>
 
             <form onSubmit={chat.handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <label htmlFor="prompt" className="block">
+                <label
+                  htmlFor="prompt"
+                  className="block text-sm font-medium text-purple-200"
+                >
                   Enter your message:
                 </label>
                 <Input
@@ -156,7 +215,7 @@ export default function HomePage() {
                   value={chat.input}
                   onChange={chat.handleInputChange}
                   placeholder="What would you like to know?"
-                  className="w-full bg-white/20 text-white"
+                  className="w-full bg-white/20 py-6 text-white placeholder:text-purple-200/50 focus:border-purple-400 focus:ring-purple-400"
                   disabled={disabled}
                 />
               </div>
@@ -164,7 +223,7 @@ export default function HomePage() {
               <Button
                 type="submit"
                 disabled={disabled || !chat.input.trim()}
-                className="w-full"
+                className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 py-6 font-medium transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {disabled ? "Processing..." : "Send"}
               </Button>
@@ -172,15 +231,15 @@ export default function HomePage() {
           </Card>
         )}
 
-        <div className="mt-8 text-center text-sm opacity-80">
+        <div className="mt-8 text-center text-sm text-purple-200 opacity-80">
           <p>This is a demo implementation of Lava Payments integration.</p>
-          <p>
+          <p className="mt-2">
             Check out the{" "}
             <a
               href="https://docs.lavapayments.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline"
+              className="text-pink-300 underline transition-colors hover:text-pink-200"
             >
               documentation
             </a>{" "}
