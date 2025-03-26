@@ -3,9 +3,10 @@ import { getConnectionDetails } from "~/server/lava";
 
 export async function GET(
   request: Request,
-  { params }: { params: { connectionId: string } },
+  { params }: { params: Promise<{ connectionId: string }> },
 ) {
-  const { connectionId } = params;
+  const resolvedParams = await params;
+  const { connectionId } = resolvedParams;
 
   if (!connectionId) {
     return NextResponse.json(

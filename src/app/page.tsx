@@ -21,7 +21,15 @@ export default function HomePage() {
   );
   const [loading, setLoading] = useState(false);
   // Chat state
-  const chat = useChat({});
+  const chat = useChat({
+    experimental_prepareRequestBody({ messages, id }) {
+      return {
+        messages,
+        id,
+        connectionId,
+      };
+    },
+  });
 
   // Lava checkout hook
   async function saveConnection(connectionId: string) {

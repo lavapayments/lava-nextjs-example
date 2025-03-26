@@ -1,19 +1,21 @@
 import { createOpenAI } from "@ai-sdk/openai";
 import { type NextRequest, NextResponse } from "next/server";
-import { type CoreMessage, generateText } from "ai";
+import { type CoreMessage, streamText } from "ai";
 import { lava } from "~/server/clients/lava";
 import { env } from "~/env";
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages, connectionSecret } = (await req.json()) as {
+    const { messages, connectionId } = (await req.json()) as {
       messages: CoreMessage[];
-      connectionSecret: string;
+      connectionId: string;
     };
+
+    const connection = await lava.connections.retrieve(connectionId);
 
     // Generate a forward token for this connection
     const forwardToken = lava.generateForwardToken({
-      connection_secret: connectionSecret,
+      connection_secret: connection.connection_secret,
       product_secret: env.LAVA_PRODUCT_SECRET,
     });
 
@@ -24,12 +26,16 @@ export async function POST(req: NextRequest) {
     });
 
     // Generate text using the AI SDK
-    const { text } = await generateText({
+    const result = streamText({
       model: openai("gpt-4o-mini"),
       messages,
     });
 
-    return NextResponse.json({ text });
+    // consume the stream to ensure it runs to completion & triggers onFinish
+    // even when the client response is aborted:
+    void result.consumeStream();
+
+    return result.toDataStreamResponse();
   } catch (error) {
     console.error("Error in chat route:", error);
     return NextResponse.json(
