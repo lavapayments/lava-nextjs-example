@@ -9,6 +9,8 @@ export const env = createEnv({
   server: {
     NODE_ENV: z.enum(["development", "test", "production"]),
     LAVA_SECRET_KEY: z.string(),
+    LAVA_PRODUCT_SECRET: z.string(),
+    LAVA_ORIGIN_URL: z.string(),
   },
 
   /**
@@ -26,8 +28,10 @@ export const env = createEnv({
    */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
-    // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
     LAVA_SECRET_KEY: process.env.LAVA_SECRET_KEY,
+    LAVA_PRODUCT_SECRET: process.env.LAVA_PRODUCT_SECRET,
+    LAVA_ORIGIN_URL: process.env.LAVA_ORIGIN_URL,
+    // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

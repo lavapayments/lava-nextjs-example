@@ -1,29 +1,70 @@
-# Create T3 App
+# Lava Payments Next.js Example
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+This example demonstrates how to integrate Lava Payments into a Next.js application. It shows the implementation of:
 
-## What's next? How do I make an app with this?
+1. Connecting a user's wallet using the Lava Checkout component
+2. Making AI API requests through Lava's forward API
+3. Checking wallet balances and topping up funds
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Getting Started
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+### Prerequisites
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+- Node.js 18 or later
+- NPM or Yarn
+- A Lava account with API keys
 
-## Learn More
+### Setup
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+1. Clone this repository
+2. Install dependencies:
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+```bash
+npm install
+# or
+yarn install
+```
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+3. Copy the `.env.example` file to `.env` and update with your Lava API keys:
 
-## How do I deploy this?
+```bash
+cp .env.example .env
+```
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+Edit the `.env` file to include your Lava API keys:
+
+```
+LAVA_SECRET_KEY="your_lava_secret_key"
+LAVA_PRODUCT_SECRET="your_lava_product_secret"
+```
+
+4. Start the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+
+## Features
+
+- **Wallet Connection**: Users can connect their Lava wallet to your application.
+- **AI Chat**: Once connected, users can interact with an AI chatbot, with the requests proxied through Lava for usage-based billing.
+- **Balance Display**: View the current wallet balance.
+- **Top-up Functionality**: Add funds to the wallet balance.
+
+## How It Works
+
+1. **Connection**: When a user clicks "Connect Wallet", the Lava checkout flow is initiated, allowing them to create or connect their wallet.
+2. **Chat Interface**: After connection, users can send messages which are processed by the AI API through Lava's forward endpoint.
+3. **Billing**: Lava automatically tracks usage and bills the user based on API consumption.
+
+## Documentation
+
+For more information on the Lava API and SDK, refer to the [Lava Documentation](https://docs.lavapayments.com).
+
+## License
+
+This example is licensed under the MIT License.
