@@ -244,7 +244,7 @@ export default function HomePage() {
           <p className="mt-2">
             Check out the{" "}
             <a
-              href="https://docs.lavapayments.com"
+              href="https://www.lavapayments.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-pink-300 underline transition-colors hover:text-pink-200"

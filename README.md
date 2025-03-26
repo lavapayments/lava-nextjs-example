@@ -63,7 +63,7 @@ yarn dev
 
 ## Documentation
 
-For more information on the Lava API and SDK, refer to the [Lava Documentation](https://docs.lavapayments.com).
+For more information on the Lava API and SDK, refer to the [Lava Documentation](https://www.lavapayments.com).
 
 ## License
 
