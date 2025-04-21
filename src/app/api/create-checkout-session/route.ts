@@ -4,7 +4,7 @@ import { lava } from "~/server/clients/lava";
 
 export async function POST() {
   try {
-    const checkoutSession = await lava.checkout.create({
+    const checkoutSession = await lava.checkoutSessions.create({
       checkout_mode: "onboarding",
       origin_url: env.LAVA_ORIGIN_URL,
     });
