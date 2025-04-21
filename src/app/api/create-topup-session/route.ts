@@ -22,7 +22,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const checkoutSession = await lava.checkout.create({
+    const checkoutSession = await lava.checkoutSessions.create({
       checkout_mode: "topup",
       connection_id: connectionId,
       origin_url: env.LAVA_ORIGIN_URL,
